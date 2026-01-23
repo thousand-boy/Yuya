@@ -14,11 +14,13 @@ public class MenuApp {
                 case 1:
                     System.out.println("【1】MiniCashier を起動します");
                     MiniCashier.main(new String[0]);
+                    pause(sc);
                     break;
 
                 case 2:
                     System.out.println("【2】ScoreAnalyzer を起動します");
                     ScoreAnalyzer.main(new String[0]);
+                    pause(sc);
                     break;
 
                 case 0:
@@ -51,6 +53,14 @@ public class MenuApp {
             System.out.print(message);
         }
 
-        return sc.nextInt();
+        int value = sc.nextInt(); // 数字を読む
+        sc.nextLine();            // その後ろの改行を捨てる
+        return value;
+    }
+
+    static void pause(Scanner sc) {
+        System.out.println("\nEnterでメニューに戻ります...");
+        sc.nextLine(); // nextInt() の残り改行を捨てる
+        sc.nextLine(); // Enter待ち
     }
 }

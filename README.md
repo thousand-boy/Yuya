@@ -113,3 +113,17 @@ Week1のMiniCashierを「読みやすく・直しやすく」するために、�
 - `fatal: not a git repository`  
   → `.git` があるフォルダ（例：`/Users/.../IdeaProjects/Java`）でGitコマンドを実行する
 - `public class ○○` とファイル名 `○○.java` は一致させる（Javaのルール）
+
+## Week3：メニューアプリ（MenuApp）
+
+### これは何？
+MiniCashier と ScoreAnalyzer をメニューから選んで起動できる統合アプリです。
+
+### 実行ファイル
+- `src/MenuApp.java`
+
+### 使い方（例）
+- 1 → MiniCashier（入力式レジ）
+- 2 → ScoreAnalyzer（点数集計）
+- 3 → ヘルプ表示
+- 0 → 終了

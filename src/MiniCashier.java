@@ -9,18 +9,15 @@ public class MiniCashier {
             int price = readInt(sc, "商品金額を入力してください: ");
             int paid  = readInt(sc, "支払額を入力してください: ");
 
-            if (!isValid(price, paid)) {
-                return;
-            }
+            if (!isValid(price, paid)) return;
 
             printHeader(price, paid);
             printResult(price, paid);
 
         } catch (Exception e) {
             System.out.println("数字を入力してください（例：680）");
-        } finally {
-            sc.close();
         }
+        // sc.close(); は書かない（System.in を閉じない）
     }
 
     static int readInt(Scanner sc, String message) {

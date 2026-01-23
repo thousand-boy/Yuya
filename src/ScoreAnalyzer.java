@@ -9,7 +9,6 @@ public class ScoreAnalyzer {
         Result r = analyze(scores);
         printResult(r);
 
-        sc.close();
     }
 
     // ① 入力：点数を配列に入れる

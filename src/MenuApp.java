@@ -12,11 +12,15 @@ public class MenuApp {
 
             switch (choice) {
                 case 1:
-                    System.out.println("【1】MiniCashier を起動します（今はダミー）");
+                    System.out.println("【1】MiniCashier を起動します");
+                    MiniCashier.main(new String[0]);
                     break;
+
                 case 2:
-                    System.out.println("【2】ScoreAnalyzer を起動します（今はダミー）");
+                    System.out.println("【2】ScoreAnalyzer を起動します");
+                    ScoreAnalyzer.main(new String[0]);
                     break;
+
                 case 0:
                     System.out.println("終了します。おつかれさまでした！");
                     sc.close();

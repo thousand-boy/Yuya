@@ -23,16 +23,23 @@ public class MenuApp {
                     pause(sc);
                     break;
 
+                case 3:
+                    printHelp();
+                    pause(sc);
+                    break;
+
                 case 0:
                     System.out.println("終了します。おつかれさまでした！");
                     sc.close();
                     return;
+
                 default:
-                    System.out.println("0 / 1 / 2 のどれかを入力してください。");
+                    System.out.println("0 / 1 / 2 / 3 のどれかを入力してください。");
+                    pause(sc);
                     break;
             }
 
-            System.out.println(); // 空行（見やすくする）
+            System.out.println();
         }
     }
 
@@ -40,6 +47,7 @@ public class MenuApp {
         System.out.println("==== メニュー ====");
         System.out.println("1: 入力式レジ（MiniCashier）");
         System.out.println("2: 点数集計（ScoreAnalyzer）");
+        System.out.println("3: このアプリについて（ヘルプ）");
         System.out.println("0: 終了");
         System.out.println("===============");
     }
@@ -49,18 +57,24 @@ public class MenuApp {
 
         while (!sc.hasNextInt()) {
             System.out.println("数字を入力してください。");
-            sc.next(); // 数字じゃない入力を捨てる
+            sc.next();
             System.out.print(message);
         }
 
-        int value = sc.nextInt(); // 数字を読む
-        sc.nextLine();            // その後ろの改行を捨てる
+        int value = sc.nextInt();
+        sc.nextLine(); // 改行を捨てる
         return value;
     }
 
     static void pause(Scanner sc) {
         System.out.println("\nEnterでメニューに戻ります...");
-        sc.nextLine(); // nextInt() の残り改行を捨てる
-        sc.nextLine(); // Enter待ち
+        sc.nextLine();
+    }
+
+    static void printHelp() {
+        System.out.println("==== このアプリについて ====");
+        System.out.println("- MenuApp から MiniCashier / ScoreAnalyzer を起動できます");
+        System.out.println("- 入力が数字以外でも落ちないようにしています");
+        System.out.println("- 終了後はEnterでメニューに戻ります");
     }
 }

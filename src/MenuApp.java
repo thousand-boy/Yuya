@@ -28,6 +28,12 @@ public class MenuApp {
                     pause(sc);
                     break;
 
+                case 4:
+                    System.out.println("【4】ScoreAnalyzerV2 を起動します（人数可変）");
+                    ScoreAnalyzerV2.main(new String[0]);
+                    pause(sc);
+                    break;
+
                 case 0:
                     System.out.println("終了します。おつかれさまでした！");
                     sc.close();
@@ -48,6 +54,7 @@ public class MenuApp {
         System.out.println("1: 入力式レジ（MiniCashier）");
         System.out.println("2: 点数集計（ScoreAnalyzer）");
         System.out.println("3: このアプリについて（ヘルプ）");
+        System.out.println("4: 点数集計V2（人数可変）");
         System.out.println("0: 終了");
         System.out.println("===============");
     }

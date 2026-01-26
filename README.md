@@ -127,3 +127,25 @@ MiniCashier と ScoreAnalyzer をメニューから選んで起動できる統�
 - 2 → ScoreAnalyzer（点数集計）
 - 3 → ヘルプ表示
 - 0 → 終了
+
+## Week4：List / Map（集計の実務っぽい基礎）
+
+### できるようになったこと
+- 配列ではなく List（ArrayList）で「人数可変」の点数集計ができるようになった（ScoreAnalyzerV2）
+- Map（HashMap）で「分類して数える」集計ができるようになった（ScoreDistribution）
+
+### 実行ファイル
+- `src/ScoreAnalyzerV2.java`：人数可変の点数集計（List）
+- `src/ScoreDistribution.java`：成績分布（A/B/C/D/F）を集計（Map）
+
+### 入力例と出力例（ScoreDistribution）
+**入力例**
+- 人数: 5
+- 点数: 100, 85, 75, 60, 10
+
+**出力例（例）**
+- A(90-100): 1
+- B(80-89):  1
+- C(70-79):  1
+- D(60-69):  1
+- F(0-59):   1

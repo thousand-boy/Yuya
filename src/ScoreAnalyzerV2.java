@@ -7,46 +7,38 @@ public class ScoreAnalyzerV2 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("=== ScoreAnalyzerV2（人数可変）===");
+        int n = readCount(sc);
+        if (n == 0) return;
 
+        List<Integer> scores = readScores(sc, n);
+        Result result = analyze(scores);
+        printResult(result);
+
+        // sc.close(); はしない（MenuApp統合を考慮）
+    }
+
+    // 人数入力（1以上のみOK。ダメなら終了）
+    static int readCount(Scanner sc) {
+        System.out.println("=== ScoreAnalyzerV2（人数可変）===");
         int n = readInt(sc, "人数を入力してください: ");
 
         if (n <= 0) {
             System.out.println("人数は1以上で入力してください。");
-            return; // closeはしない（MenuApp統合を考慮）
+            return 0;
         }
-
-        List<Integer> scores = readScores(sc, n);
-
-        Result r = analyze(scores);
-        printResult(r);
+        return n;
     }
 
-    // 数字以外でも落ちない入力（MenuAppのreadIntと同じ思想）
-    static int readInt(Scanner sc, String message) {
-        System.out.print(message);
-
-        while (!sc.hasNextInt()) {
-            System.out.println("数字を入力してください。");
-            sc.next(); // 変な入力を捨てる
-            System.out.print(message);
-        }
-
-        int value = sc.nextInt();
-        sc.nextLine(); // 改行を捨てる（次のnextLine対策）
-        return value;
-    }
-
+    // 点数入力（0〜100以外はやり直し）
     static List<Integer> readScores(Scanner sc, int n) {
         List<Integer> scores = new ArrayList<>();
 
         for (int i = 1; i <= n; i++) {
             int score = readInt(sc, i + "人目の点数を入力してください: ");
 
-            // ここはルール自由：0〜100に制限したいならチェック
-            if (score < 0 || score > 100) {
+            if (!isValidScore(score)) {
                 System.out.println("点数は0〜100で入力してください。もう一度。");
-                i--; // この人の分をやり直す
+                i--; // 同じ人をやり直し
                 continue;
             }
 
@@ -56,6 +48,11 @@ public class ScoreAnalyzerV2 {
         return scores;
     }
 
+    static boolean isValidScore(int score) {
+        return score >= 0 && score <= 100;
+    }
+
+    // 集計（入力と表示に触れない）
     static Result analyze(List<Integer> scores) {
         int sum = 0;
         int max = scores.get(0);
@@ -70,9 +67,10 @@ public class ScoreAnalyzerV2 {
         }
 
         double avg = (double) sum / scores.size();
-        return new Result(sum, avg, max, min, passCount, scores.size());
+        return new Result(scores.size(), sum, avg, max, min, passCount);
     }
 
+    // 表示（計算をしない）
     static void printResult(Result r) {
         System.out.println("---- 結果 ----");
         System.out.println("人数: " + r.count);
@@ -83,21 +81,36 @@ public class ScoreAnalyzerV2 {
         System.out.println("合格(60以上)人数: " + r.passCount);
     }
 
+    // 数字以外でも落ちない入力
+    static int readInt(Scanner sc, String message) {
+        System.out.print(message);
+
+        while (!sc.hasNextInt()) {
+            System.out.println("数字を入力してください。");
+            sc.next();
+            System.out.print(message);
+        }
+
+        int value = sc.nextInt();
+        sc.nextLine(); // 改行を捨てる
+        return value;
+    }
+
     static class Result {
+        int count;
         int sum;
         double avg;
         int max;
         int min;
         int passCount;
-        int count;
 
-        Result(int sum, double avg, int max, int min, int passCount, int count) {
+        Result(int count, int sum, double avg, int max, int min, int passCount) {
+            this.count = count;
             this.sum = sum;
             this.avg = avg;
             this.max = max;
             this.min = min;
             this.passCount = passCount;
-            this.count = count;
         }
     }
 }

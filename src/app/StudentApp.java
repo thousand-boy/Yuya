@@ -5,6 +5,7 @@ import model.Student;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import service.StudentService;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -139,18 +140,10 @@ public class StudentApp {
     }
 
     static void printSummary(List<Student> students) {
-        int sum = 0;
-        int max = students.get(0).getScore();
-        int min = students.get(0).getScore();
-
-        for (Student s : students) {
-            int score = s.getScore();
-            sum += score;
-            if (score > max) max = score;
-            if (score < min) min = score;
-        }
-
-        double avg = (double) sum / students.size();
+        int sum = StudentService.sum(students);
+        double avg = StudentService.average(students);
+        int max = StudentService.maxScore(students);
+        int min = StudentService.minScore(students);
 
         System.out.println("---- 集計 ----");
         System.out.println("人数: " + students.size());
@@ -162,31 +155,22 @@ public class StudentApp {
 
     static void printPassList(List<Student> students) {
         System.out.println("---- 合格者(60以上) ----");
-        int count = 0;
 
         for (Student s : students) {
             if (s.isPass()) {
                 System.out.println(s.getName() + " (" + s.getScore() + "点 / " + s.grade() + ")");
-                count++;
             }
         }
 
+        int count = StudentService.passCount(students);
         System.out.println("合格人数: " + count);
     }
 
     static void searchByName(List<Student> students, Scanner sc) {
-        String keyword = readNonEmptyLine(sc, "検索する名前（部分一致OK）: ").toLowerCase();
+        String keyword = readNonEmptyLine(sc, "検索する名前（部分一致OK）: ");
 
         System.out.println("---- 検索結果 ----");
-        int hit = 0;
-
-        for (Student s : students) {
-            String nameLower = s.getName().toLowerCase();
-            if (nameLower.contains(keyword)) {
-                System.out.println(s.getName() + " : " + s.getScore() + "点 (" + s.grade() + ")");
-                hit++;
-            }
-        }
+        int hit = StudentService.searchAndPrint(students, keyword);
 
         if (hit == 0) {
             System.out.println("見つかりませんでした。");
@@ -197,12 +181,7 @@ public class StudentApp {
 
     // ★追加：成績分布（Map集計）
     static void printGradeDistribution(List<Student> students) {
-        Map<String, Integer> counts = new HashMap<>();
-
-        for (Student s : students) {
-            String g = s.grade(); // A/B/C/D/F
-            counts.put(g, counts.getOrDefault(g, 0) + 1);
-        }
+        Map<String, Integer> counts = StudentService.gradeDistribution(students);
 
         System.out.println("---- 成績分布 ----");
         System.out.println("A(90-100): " + counts.getOrDefault("A", 0));

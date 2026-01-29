@@ -34,6 +34,12 @@ public class MenuApp {
                     pause(sc);
                     break;
 
+                case 5:
+                    System.out.println("【5】StudentApp を起動します（名前＋点数）");
+                    StudentApp.main(new String[0]);
+                    pause(sc);
+                    break;
+
                 case 0:
                     System.out.println("終了します。おつかれさまでした！");
                     sc.close();
@@ -55,6 +61,7 @@ public class MenuApp {
         System.out.println("2: 点数集計（ScoreAnalyzer）");
         System.out.println("3: このアプリについて（ヘルプ）");
         System.out.println("4: 点数集計V2（人数可変）");
+        System.out.println("5: 学生点数管理（StudentApp）");
         System.out.println("0: 終了");
         System.out.println("===============");
     }

@@ -1,5 +1,7 @@
 package app;
 
+import util.InputUtil;
+
 import java.util.Scanner;
 
 public class MenuApp {
@@ -10,36 +12,36 @@ public class MenuApp {
         while (true) {
             printMenu();
 
-            int choice = readInt(sc, "番号を選んでください: ");
+            int choice = InputUtil.readInt(sc, "番号を選んでください: ");
 
             switch (choice) {
                 case 1:
                     System.out.println("【1】app.MiniCashier を起動します");
                     MiniCashier.main(new String[0]);
-                    pause(sc);
+                    InputUtil.pause(sc, "Enterでメニューに戻ります...");
                     break;
 
                 case 2:
                     System.out.println("【2】app.ScoreAnalyzer を起動します");
                     ScoreAnalyzer.main(new String[0]);
-                    pause(sc);
+                    InputUtil.pause(sc, "Enterでメニューに戻ります...");
                     break;
 
                 case 3:
                     printHelp();
-                    pause(sc);
+                    InputUtil.pause(sc, "Enterでメニューに戻ります...");
                     break;
 
                 case 4:
                     System.out.println("【4】app.ScoreAnalyzerV2 を起動します（人数可変）");
                     ScoreAnalyzerV2.main(new String[0]);
-                    pause(sc);
+                    InputUtil.pause(sc, "Enterでメニューに戻ります...");
                     break;
 
                 case 5:
                     System.out.println("【5】app.StudentApp を起動します（名前＋点数）");
                     StudentApp.main(new String[0]);
-                    pause(sc);
+                    InputUtil.pause(sc, "Enterでメニューに戻ります...");
                     break;
 
                 case 0:
@@ -49,7 +51,7 @@ public class MenuApp {
 
                 default:
                     System.out.println("0 / 1 / 2 / 3 / 4 / 5 のどれかを入力してください。");
-                    pause(sc);
+                    InputUtil.pause(sc, "Enterでメニューに戻ります...");
                     break;
             }
 
@@ -66,25 +68,6 @@ public class MenuApp {
         System.out.println("5: 学生点数管理（app.StudentApp）");
         System.out.println("0: 終了");
         System.out.println("===============");
-    }
-
-    static int readInt(Scanner sc, String message) {
-        System.out.print(message);
-
-        while (!sc.hasNextInt()) {
-            System.out.println("数字を入力してください。");
-            sc.next();
-            System.out.print(message);
-        }
-
-        int value = sc.nextInt();
-        sc.nextLine(); // 改行を捨てる
-        return value;
-    }
-
-    static void pause(Scanner sc) {
-        System.out.println("\nEnterでメニューに戻ります...");
-        sc.nextLine();
     }
 
     static void printHelp() {

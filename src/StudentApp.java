@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class StudentApp {
@@ -40,12 +42,17 @@ public class StudentApp {
                     pause(sc);
                     break;
 
+                case 5:
+                    printGradeDistribution(students);
+                    pause(sc);
+                    break;
+
                 case 0:
                     System.out.println("StudentAppを終了します。");
                     return;
 
                 default:
-                    System.out.println("0 / 1 / 2 / 3 / 4 のどれかを入力してください。");
+                    System.out.println("0 / 1 / 2 / 3 / 4 / 5 のどれかを入力してください。");
                     pause(sc);
                     break;
             }
@@ -108,6 +115,7 @@ public class StudentApp {
         System.out.println("2: 集計（合計/平均/最高/最低）");
         System.out.println("3: 合格者一覧（60以上）");
         System.out.println("4: 名前で検索");
+        System.out.println("5: 成績分布（A/B/C/D/F）");
         System.out.println("0: 戻る");
         System.out.println("============================");
     }
@@ -181,5 +189,22 @@ public class StudentApp {
         } else {
             System.out.println("件数: " + hit);
         }
+    }
+
+    // ★追加：成績分布（Map集計）
+    static void printGradeDistribution(List<Student> students) {
+        Map<String, Integer> counts = new HashMap<>();
+
+        for (Student s : students) {
+            String g = s.grade(); // A/B/C/D/F
+            counts.put(g, counts.getOrDefault(g, 0) + 1);
+        }
+
+        System.out.println("---- 成績分布 ----");
+        System.out.println("A(90-100): " + counts.getOrDefault("A", 0));
+        System.out.println("B(80-89):  " + counts.getOrDefault("B", 0));
+        System.out.println("C(70-79):  " + counts.getOrDefault("C", 0));
+        System.out.println("D(60-69):  " + counts.getOrDefault("D", 0));
+        System.out.println("F(0-59):   " + counts.getOrDefault("F", 0));
     }
 }

@@ -150,16 +150,16 @@ MiniCashier と ScoreAnalyzer をメニューから選んで起動できる統�
 - D(60-69):  1
 - F(0-59):   1
 
-## Week5：OOP（クラス）+ List<Student> + 検索/分布
+## Week5：OOP（クラス）+ List<model.Student> + 検索/分布
 
 ### できるようになったこと
 - Studentクラス（name/score）を作り、データをオブジェクトとして扱えるようになった
-- List<Student> で複数人を管理し、一覧/集計/合格者表示ができるようになった
+- List<model.Student> で複数人を管理し、一覧/集計/合格者表示ができるようになった
 - 検索（部分一致）を追加し、アプリとしての実用性を上げた
 - Mapで成績分布（A/B/C/D/F）を集計できるようになった
 
 ### 実行ファイル
-- `src/Student.java`：学生（名前＋点数）を表すクラス
+- `src/model.Student.java`：学生（名前＋点数）を表すクラス
 - `src/StudentApp.java`：学生点数管理（一覧/集計/合格/検索/分布）
 
 ### 入力例と出力例（成績分布）

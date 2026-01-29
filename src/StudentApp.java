@@ -1,3 +1,5 @@
+import model.Student;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -130,7 +132,7 @@ public class StudentApp {
     static void printAll(List<Student> students) {
         System.out.println("---- 一覧 ----");
         for (Student s : students) {
-            System.out.println(s); // Student.toString()
+            System.out.println(s); // model.Student.toString()
         }
     }
 

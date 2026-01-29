@@ -1,3 +1,5 @@
+package app;
+
 import model.Student;
 
 import java.util.ArrayList;
@@ -112,7 +114,7 @@ public class StudentApp {
     // ---------- メニュー ----------
 
     static void printStudentMenu() {
-        System.out.println("\n==== StudentApp メニュー ====");
+        System.out.println("\n==== app.StudentApp メニュー ====");
         System.out.println("1: 一覧表示");
         System.out.println("2: 集計（合計/平均/最高/最低）");
         System.out.println("3: 合格者一覧（60以上）");

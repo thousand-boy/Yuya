@@ -1,3 +1,5 @@
+package app;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +21,7 @@ public class ScoreAnalyzerV2 {
 
     // 人数入力（1以上のみOK。ダメなら終了）
     static int readCount(Scanner sc) {
-        System.out.println("=== ScoreAnalyzerV2（人数可変）===");
+        System.out.println("=== app.ScoreAnalyzerV2（人数可変）===");
         int n = readInt(sc, "人数を入力してください: ");
 
         if (n <= 0) {

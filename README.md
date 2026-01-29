@@ -18,13 +18,13 @@
 
 ---
 
-## Week1：ミニ作品（入力式レジ / MiniCashier）
+## Week1：ミニ作品（入力式レジ / app.MiniCashier）
 
 ### これは何？
 商品金額と支払額を入力すると、お釣りまたは不足金額を表示するコンソールアプリです。
 
 ### 実行ファイル
-- `src/MiniCashier.java`
+- `src/app.MiniCashier.java`
 
 ### 入力例と出力例（1つ）
 **入力例**
@@ -38,15 +38,15 @@
 
 ---
 
-## Week2：メソッド化（リファクタリング）＆配列集計（ScoreAnalyzer）
+## Week2：メソッド化（リファクタリング）＆配列集計（app.ScoreAnalyzer）
 
 ### これは何？
 Week1のMiniCashierを「読みやすく・直しやすく」するために、処理をメソッド（関数）に分割しました。  
-あわせて、配列を使って複数データを集計する点数集計アプリ（ScoreAnalyzer）を作成しました。
+あわせて、配列を使って複数データを集計する点数集計アプリ（app.ScoreAnalyzer）を作成しました。
 
-### 作品1：MiniCashier（メソッド化版）
+### 作品1：app.MiniCashier（メソッド化版）
 #### 実行ファイル
-- `src/MiniCashier.java`
+- `src/app.MiniCashier.java`
 
 #### できること（要点）
 - 入力（商品金額・支払額）
@@ -66,9 +66,9 @@ Week1のMiniCashierを「読みやすく・直しやすく」するために、�
 
 ---
 
-### 作品2：点数集計（ScoreAnalyzer）
+### 作品2：点数集計（app.ScoreAnalyzer）
 #### 実行ファイル
-- `src/ScoreAnalyzer.java`
+- `src/app.ScoreAnalyzer.java`
 
 #### できること（要点）
 - 5人分の点数を入力して配列に保存
@@ -105,7 +105,7 @@ Week1のMiniCashierを「読みやすく・直しやすく」するために、�
 - 例外処理（try/catch/finally）で入力ミスに強くする
 - 配列（`int[]`）とループで複数データをまとめて処理する
 - 平均計算で `double` キャストを使い、整数割り算を避ける
-- 複数の結果をまとめるために Result（箱）を使う（ScoreAnalyzer）
+- 複数の結果をまとめるために Result（箱）を使う（app.ScoreAnalyzer）
 
 ---
 
@@ -114,31 +114,31 @@ Week1のMiniCashierを「読みやすく・直しやすく」するために、�
   → `.git` があるフォルダ（例：`/Users/.../IdeaProjects/Java`）でGitコマンドを実行する
 - `public class ○○` とファイル名 `○○.java` は一致させる（Javaのルール）
 
-## Week3：メニューアプリ（MenuApp）
+## Week3：メニューアプリ（app.MenuApp）
 
 ### これは何？
-MiniCashier と ScoreAnalyzer をメニューから選んで起動できる統合アプリです。
+app.MiniCashier と app.ScoreAnalyzer をメニューから選んで起動できる統合アプリです。
 
 ### 実行ファイル
-- `src/MenuApp.java`
+- `src/app.MenuApp.java`
 
 ### 使い方（例）
-- 1 → MiniCashier（入力式レジ）
-- 2 → ScoreAnalyzer（点数集計）
+- 1 → app.MiniCashier（入力式レジ）
+- 2 → app.ScoreAnalyzer（点数集計）
 - 3 → ヘルプ表示
 - 0 → 終了
 
 ## Week4：List / Map（集計の実務っぽい基礎）
 
 ### できるようになったこと
-- 配列ではなく List（ArrayList）で「人数可変」の点数集計ができるようになった（ScoreAnalyzerV2）
-- Map（HashMap）で「分類して数える」集計ができるようになった（ScoreDistribution）
+- 配列ではなく List（ArrayList）で「人数可変」の点数集計ができるようになった（app.ScoreAnalyzerV2）
+- Map（HashMap）で「分類して数える」集計ができるようになった（app.ScoreDistribution）
 
 ### 実行ファイル
-- `src/ScoreAnalyzerV2.java`：人数可変の点数集計（List）
-- `src/ScoreDistribution.java`：成績分布（A/B/C/D/F）を集計（Map）
+- `src/app.ScoreAnalyzerV2.java`：人数可変の点数集計（List）
+- `src/app.ScoreDistribution.java`：成績分布（A/B/C/D/F）を集計（Map）
 
-### 入力例と出力例（ScoreDistribution）
+### 入力例と出力例（app.ScoreDistribution）
 **入力例**
 - 人数: 5
 - 点数: 100, 85, 75, 60, 10
@@ -160,7 +160,7 @@ MiniCashier と ScoreAnalyzer をメニューから選んで起動できる統�
 
 ### 実行ファイル
 - `src/model.Student.java`：学生（名前＋点数）を表すクラス
-- `src/StudentApp.java`：学生点数管理（一覧/集計/合格/検索/分布）
+- `src/app.StudentApp.java`：学生点数管理（一覧/集計/合格/検索/分布）
 
 ### 入力例と出力例（成績分布）
 **入力例**

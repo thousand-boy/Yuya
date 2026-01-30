@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption; // ★これが必要
 import java.util.ArrayList;
 import java.util.List;
 
 public class StudentCsvService {
 
-    // 例: "students.csv"（プロジェクト直下に作られます）
     public static void save(List<Student> students, String filePath) {
         List<String> lines = new ArrayList<>();
         lines.add("name,score");
@@ -23,11 +23,19 @@ public class StudentCsvService {
         try {
             Path path = Path.of(filePath);
 
-            // ★ data/ など親フォルダが無ければ作る
+            // 親フォルダが無ければ作る（data/）
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
             }
 
+            // ★バックアップ：既存CSVがあるときだけ作成
+            if (Files.exists(path)) {
+                Path backupPath = path.getParent().resolve("students_backup.csv");
+                Files.copy(path, backupPath, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("バックアップ作成: " + backupPath);
+            }
+
+            // 本保存
             Files.write(path, lines, StandardCharsets.UTF_8);
             System.out.println("保存しました: " + filePath);
 
@@ -62,7 +70,7 @@ public class StudentCsvService {
 
                 // ヘッダー除外
                 if (trimmed.equalsIgnoreCase("name,score")) {
-                    continue; // ヘッダーはスキップ扱いにしない（ノイズになるため）
+                    continue;
                 }
 
                 String[] parts = trimmed.split(",", -1);

@@ -190,3 +190,8 @@ app.MiniCashier と app.ScoreAnalyzer をメニューから選んで起動でき
 - 役割で分ける（UI / ロジック / データ / 共通処理）
 - 入力の「改行問題（nextInt→nextLine）」を InputUtil に集約して事故を防いだ
 - ロジックを service に切り出して、拡張しやすい構造にした
+
+### Week7：CSV保存/読み込み（永続化）
+- `StudentCsvService` を追加し、学生データを `data/students.csv` に保存・復元できるようにした
+- `data/` が無い場合は自動作成して、保存時に失敗しにくくした
+- 読み込み時は「成功件数 / スキップ行数」を表示し、壊れた行が混ざっても落ちずに原因が追えるようにした

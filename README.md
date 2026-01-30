@@ -201,6 +201,8 @@ app.MiniCashier と app.ScoreAnalyzer をメニューから選んで起動でき
 - 初見の人が試せるように、サンプルとして `data/students_sample.csv` を用意しています
   - 例：`data/students_sample.csv` を `data/students.csv` にコピーすると、起動時の自動ロードを確認できます
 
+- 保存時に既存CSVがあれば `students_backup.csv` を自動作成してから上書き保存（事故っても復元可能）
+
 **サンプルをコピーして試す（Mac / ターミナル）**
 ```bash
 cp data/students_sample.csv data/students.csv

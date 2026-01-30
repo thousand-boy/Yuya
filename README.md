@@ -204,3 +204,5 @@ app.MiniCashier と app.ScoreAnalyzer をメニューから選んで起動でき
 **サンプルをコピーして試す（Mac / ターミナル）**
 ```bash
 cp data/students_sample.csv data/students.csv
+
+- サンプルCSVは `sample/students_sample.csv`（Git管理）

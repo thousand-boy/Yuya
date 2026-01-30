@@ -1,8 +1,8 @@
 package app;
 
 import model.Student;
-import service.StudentService;
 import service.StudentCsvService;
+import service.StudentService;
 import util.InputUtil;
 
 import java.util.ArrayList;
@@ -15,13 +15,28 @@ public class StudentApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int n = InputUtil.readInt(sc, "人数を入力してください: ");
-        if (n <= 0) {
-            System.out.println("人数は1以上で入力してください。");
-            return; // System.in を close しない（統合アプリで戻れなくなるため）
-        }
+        String csvPath = "data/students.csv";
 
-        List<Student> students = readStudents(sc, n);
+        // 起動時にCSVがあれば読み込み提案
+        List<Student> loadedOnStart = StudentCsvService.load(csvPath);
+
+        List<Student> students;
+
+        if (!loadedOnStart.isEmpty()) {
+            System.out.println("\nCSVに保存された学生データが見つかりました（" + loadedOnStart.size() + "件）。");
+            boolean useCsv = InputUtil.readYesNo(sc, "このデータを使用しますか？ (y/n): ");
+
+            if (useCsv) {
+                students = loadedOnStart;
+                System.out.println("CSVのデータで開始します。");
+            } else {
+                System.out.println("手入力で開始します。");
+                students = inputStudents(sc);
+            }
+        } else {
+            // ファイルなし or 0件 → 手入力
+            students = inputStudents(sc);
+        }
 
         while (true) {
             printStudentMenu();
@@ -54,16 +69,16 @@ public class StudentApp {
                     break;
 
                 case 6:
-                    StudentCsvService.save(students, "data/students.csv");
+                    StudentCsvService.save(students, csvPath);
                     InputUtil.pause(sc);
                     break;
 
                 case 7:
-                    List<Student> loaded = StudentCsvService.load("data/students.csv");
-                    if (loaded.isEmpty()) {
+                    List<Student> loadedNow = StudentCsvService.load(csvPath);
+                    if (loadedNow.isEmpty()) {
                         System.out.println("読み込み結果が0件のため、上書きしませんでした。");
                     } else {
-                        students = loaded; // ここが上書きポイント
+                        students = loadedNow; // 上書き
                         System.out.println("学生データをCSVの内容で更新しました。");
                     }
                     InputUtil.pause(sc);
@@ -71,14 +86,26 @@ public class StudentApp {
 
                 case 0:
                     System.out.println("StudentAppを終了します。");
+                    // 統合アプリ（MenuApp）から戻れるように close はしない
                     return;
 
                 default:
-                    System.out.println("0 / 1 / 2 / 3 / 4 / 5 のどれかを入力してください。");
+                    System.out.println("0 / 1 / 2 / 3 / 4 / 5 / 6 / 7 のどれかを入力してください。");
                     InputUtil.pause(sc);
                     break;
             }
         }
+    }
+
+    // ---------- 起動時の手入力 ----------
+
+    static List<Student> inputStudents(Scanner sc) {
+        int n = InputUtil.readInt(sc, "人数を入力してください: ");
+        while (n <= 0) {
+            System.out.println("人数は1以上で入力してください。");
+            n = InputUtil.readInt(sc, "人数を入力してください: ");
+        }
+        return readStudents(sc, n);
     }
 
     // ---------- 入力（InputUtilを使用） ----------

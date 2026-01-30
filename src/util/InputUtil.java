@@ -51,4 +51,16 @@ public class InputUtil {
     public static void pause(Scanner sc) {
         pause(sc, "Enterで続行します...");
     }
+
+    public static boolean readYesNo(Scanner sc, String message) {
+        while (true) {
+            System.out.print(message);
+            String s = sc.nextLine().trim().toLowerCase();
+
+            if (s.equals("y") || s.equals("yes")) return true;
+            if (s.equals("n") || s.equals("no")) return false;
+
+            System.out.println("y か n を入力してください。");
+        }
+    }
 }

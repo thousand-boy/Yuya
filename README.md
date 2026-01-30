@@ -171,3 +171,22 @@ app.MiniCashier と app.ScoreAnalyzer をメニューから選んで起動でき
 - A(90-100): 1
 - B(80-89):  1
 - F(0-59):   1
+
+## Week6：パッケージ分割（app/model/service/util）で実務っぽく整理
+
+### できるようになったこと
+- `model`：データ（Student）をクラスとして分離して管理できる
+- `app`：画面/入力/メニュー（実行起点）をまとめて整理できる
+- `service`：集計・検索・分布などのロジックを抽出して再利用できる
+- `util`：入力処理（数値/空文字/点数範囲/Enter待ち）を共通化し、バグを減らせる
+
+### ディレクトリ構成
+- `src/app`：MenuApp / MiniCashier / ScoreAnalyzer / ScoreAnalyzerV2 / StudentApp など（起動・表示・入力）
+- `src/model`：Student（データ構造）
+- `src/service`：StudentService（集計・検索・分布などの処理）
+- `src/util`：InputUtil（入力共通）
+
+### 3分で説明できるポイント
+- 役割で分ける（UI / ロジック / データ / 共通処理）
+- 入力の「改行問題（nextInt→nextLine）」を InputUtil に集約して事故を防いだ
+- ロジックを service に切り出して、拡張しやすい構造にした

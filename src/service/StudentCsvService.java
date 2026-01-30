@@ -14,16 +14,23 @@ public class StudentCsvService {
     // 例: "students.csv"（プロジェクト直下に作られます）
     public static void save(List<Student> students, String filePath) {
         List<String> lines = new ArrayList<>();
-        lines.add("name,score"); // ヘッダー（任意だが分かりやすい）
+        lines.add("name,score");
 
         for (Student s : students) {
-            // CSV最小版：名前にカンマは入れない前提（入れるならエスケープが必要）
             lines.add(s.getName() + "," + s.getScore());
         }
 
         try {
-            Files.write(Path.of(filePath), lines, StandardCharsets.UTF_8);
+            Path path = Path.of(filePath);
+
+            // ★ data/ など親フォルダが無ければ作る
+            if (path.getParent() != null) {
+                Files.createDirectories(path.getParent());
+            }
+
+            Files.write(path, lines, StandardCharsets.UTF_8);
             System.out.println("保存しました: " + filePath);
+
         } catch (IOException e) {
             System.out.println("保存に失敗しました: " + e.getMessage());
         }

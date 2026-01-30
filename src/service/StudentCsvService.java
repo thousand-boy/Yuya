@@ -1,0 +1,80 @@
+package service;
+
+import model.Student;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentCsvService {
+
+    // 例: "students.csv"（プロジェクト直下に作られます）
+    public static void save(List<Student> students, String filePath) {
+        List<String> lines = new ArrayList<>();
+        lines.add("name,score"); // ヘッダー（任意だが分かりやすい）
+
+        for (Student s : students) {
+            // CSV最小版：名前にカンマは入れない前提（入れるならエスケープが必要）
+            lines.add(s.getName() + "," + s.getScore());
+        }
+
+        try {
+            Files.write(Path.of(filePath), lines, StandardCharsets.UTF_8);
+            System.out.println("保存しました: " + filePath);
+        } catch (IOException e) {
+            System.out.println("保存に失敗しました: " + e.getMessage());
+        }
+    }
+
+    public static List<Student> load(String filePath) {
+        Path path = Path.of(filePath);
+
+        if (!Files.exists(path)) {
+            System.out.println("ファイルが見つかりません: " + filePath);
+            return new ArrayList<>();
+        }
+
+        try {
+            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+            List<Student> students = new ArrayList<>();
+
+            for (String line : lines) {
+                String trimmed = line.trim();
+                if (trimmed.isEmpty()) continue;
+
+                // ヘッダー除外
+                if (trimmed.equalsIgnoreCase("name,score")) continue;
+
+                String[] parts = trimmed.split(",", -1);
+                if (parts.length != 2) continue;
+
+                String name = parts[0].trim();
+                String scoreStr = parts[1].trim();
+
+                if (name.isEmpty()) continue;
+
+                int score;
+                try {
+                    score = Integer.parseInt(scoreStr);
+                } catch (NumberFormatException ex) {
+                    continue;
+                }
+
+                // 範囲チェック（0〜100以外はスキップ）
+                if (score < 0 || score > 100) continue;
+
+                students.add(new Student(name, score));
+            }
+
+            System.out.println("読み込みました: " + filePath + "（" + students.size() + "件）");
+            return students;
+
+        } catch (IOException e) {
+            System.out.println("読み込みに失敗しました: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+}

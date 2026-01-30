@@ -2,6 +2,7 @@ package app;
 
 import model.Student;
 import service.StudentService;
+import service.StudentCsvService;
 import util.InputUtil;
 
 import java.util.ArrayList;
@@ -52,6 +53,22 @@ public class StudentApp {
                     InputUtil.pause(sc);
                     break;
 
+                case 6:
+                    StudentCsvService.save(students, "students.csv");
+                    InputUtil.pause(sc);
+                    break;
+
+                case 7:
+                    List<Student> loaded = StudentCsvService.load("students.csv");
+                    if (loaded.isEmpty()) {
+                        System.out.println("読み込み結果が0件のため、上書きしませんでした。");
+                    } else {
+                        students = loaded; // ここが上書きポイント
+                        System.out.println("学生データをCSVの内容で更新しました。");
+                    }
+                    InputUtil.pause(sc);
+                    break;
+
                 case 0:
                     System.out.println("StudentAppを終了します。");
                     return;
@@ -87,6 +104,8 @@ public class StudentApp {
         System.out.println("3: 合格者一覧（60以上）");
         System.out.println("4: 名前で検索");
         System.out.println("5: 成績分布（A/B/C/D/F）");
+        System.out.println("6: CSVに保存（students.csv）");
+        System.out.println("7: CSVから読み込み（students.csvで上書き）");
         System.out.println("0: 戻る");
         System.out.println("============================");
     }

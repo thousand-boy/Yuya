@@ -195,3 +195,12 @@ app.MiniCashier と app.ScoreAnalyzer をメニューから選んで起動でき
 - `StudentCsvService` を追加し、学生データを `data/students.csv` に保存・復元できるようにした（`data/` は自動作成）
 - 読み込み時は「成功件数 / スキップ行数」を表示し、壊れた行が混ざっても落ちずに原因が追えるようにした
 - `StudentApp` 起動時にCSVが存在すれば自動で読み込み、使用するかどうかを `y/n` で確認して開始できるようにした
+
+#### CSVについて（保存先とサンプル）
+- StudentApp の「CSVに保存」は `data/students.csv` に出力します（※実行データなので Git 管理から除外しています）
+- 初見の人が試せるように、サンプルとして `data/students_sample.csv` を用意しています
+  - 例：`data/students_sample.csv` を `data/students.csv` にコピーすると、起動時の自動ロードを確認できます
+
+**サンプルをコピーして試す（Mac / ターミナル）**
+```bash
+cp data/students_sample.csv data/students.csv

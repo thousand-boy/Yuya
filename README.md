@@ -213,3 +213,9 @@ app.MiniCashier と app.ScoreAnalyzer をメニューから選んで起動でき
 cp data/students_sample.csv data/students.csv
 
 - サンプルCSVは `sample/students_sample.csv`（Git管理）
+
+### 1分で説明（面接用）
+- StudentAppのデータをCSVに保存/読み込みできるようにした（永続化）
+- 保存時は既存CSVを日時付きで自動バックアップしてから上書きする（復元できる）
+- バックアップは最新5件だけ残し、古いものは自動削除して増えすぎを防いだ
+- 読み込み時は不正行（空行/欠損/範囲外/非数値）をスキップし、成功件数とスキップ数を表示する

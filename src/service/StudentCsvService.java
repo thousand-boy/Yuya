@@ -44,39 +44,61 @@ public class StudentCsvService {
             return new ArrayList<>();
         }
 
+        int loadedCount = 0;
+        int skippedCount = 0;
+
         try {
             List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
             List<Student> students = new ArrayList<>();
 
             for (String line : lines) {
                 String trimmed = line.trim();
-                if (trimmed.isEmpty()) continue;
+
+                // 空行スキップ
+                if (trimmed.isEmpty()) {
+                    skippedCount++;
+                    continue;
+                }
 
                 // ヘッダー除外
-                if (trimmed.equalsIgnoreCase("name,score")) continue;
+                if (trimmed.equalsIgnoreCase("name,score")) {
+                    continue; // ヘッダーはスキップ扱いにしない（ノイズになるため）
+                }
 
                 String[] parts = trimmed.split(",", -1);
-                if (parts.length != 2) continue;
+                if (parts.length != 2) {
+                    skippedCount++;
+                    continue;
+                }
 
                 String name = parts[0].trim();
                 String scoreStr = parts[1].trim();
 
-                if (name.isEmpty()) continue;
+                if (name.isEmpty()) {
+                    skippedCount++;
+                    continue;
+                }
 
                 int score;
                 try {
                     score = Integer.parseInt(scoreStr);
                 } catch (NumberFormatException ex) {
+                    skippedCount++;
                     continue;
                 }
 
                 // 範囲チェック（0〜100以外はスキップ）
-                if (score < 0 || score > 100) continue;
+                if (score < 0 || score > 100) {
+                    skippedCount++;
+                    continue;
+                }
 
                 students.add(new Student(name, score));
+                loadedCount++;
             }
 
-            System.out.println("読み込みました: " + filePath + "（" + students.size() + "件）");
+            System.out.println("読み込みました: " + filePath);
+            System.out.println("読み込み成功: " + loadedCount + "件 / スキップ: " + skippedCount + "行");
             return students;
 
         } catch (IOException e) {

@@ -1,6 +1,8 @@
 package service;
 
 import model.Student;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -9,8 +11,13 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption; // ★これが必要
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
 public class StudentCsvService {
+    private static final String BACKUP_PREFIX = "students_backup_";
+    private static final String BACKUP_SUFFIX = ".csv";
+    private static final int KEEP_BACKUPS = 5; // 最新5件だけ残す
 
     public static void save(List<Student> students, String filePath) {
         List<String> lines = new ArrayList<>();
@@ -28,11 +35,24 @@ public class StudentCsvService {
                 Files.createDirectories(path.getParent());
             }
 
-            // ★バックアップ：既存CSVがあるときだけ作成
+            // ★バックアップ：既存CSVがあるときだけ「日時付き」で保存
             if (Files.exists(path)) {
-                Path backupPath = path.getParent().resolve("students_backup.csv");
-                Files.copy(path, backupPath, StandardCopyOption.REPLACE_EXISTING);
+                String ts = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+
+                Path parent = path.getParent();
+                Path backupPath;
+
+                if (parent != null) {
+                    backupPath = parent.resolve("students_backup_" + ts + ".csv");
+                } else {
+                    backupPath = Path.of("students_backup_" + ts + ".csv");
+                }
+
+                Files.copy(path, backupPath, StandardCopyOption.COPY_ATTRIBUTES);
                 System.out.println("バックアップ作成: " + backupPath);
+
+                // ★追加：古いバックアップを削除（最新KEEP_BACKUPS件だけ残す）
+                pruneOldBackups(parent != null ? parent : Path.of("."), KEEP_BACKUPS);
             }
 
             // 本保存
@@ -112,6 +132,32 @@ public class StudentCsvService {
         } catch (IOException e) {
             System.out.println("読み込みに失敗しました: " + e.getMessage());
             return new ArrayList<>();
+        }
+    }
+    private static void pruneOldBackups(Path dir, int keepCount) {
+        try (Stream<Path> stream = Files.list(dir)) {
+
+            List<Path> backups = stream
+                    .filter(Files::isRegularFile)
+                    .filter(p -> {
+                        String name = p.getFileName().toString();
+                        return name.startsWith(BACKUP_PREFIX) && name.endsWith(BACKUP_SUFFIX);
+                    })
+                    // ファイル名が yyyyMMdd_HHmmss なので、名前順=日時順
+                    .sorted(Comparator.comparing(p -> p.getFileName().toString()))
+                    .toList();
+
+            int deleteCount = backups.size() - keepCount;
+            if (deleteCount <= 0) return;
+
+            for (int i = 0; i < deleteCount; i++) {
+                Files.deleteIfExists(backups.get(i));
+            }
+
+            System.out.println("古いバックアップを削除しました: " + deleteCount + "件");
+
+        } catch (IOException e) {
+            System.out.println("バックアップ整理に失敗しました: " + e.getMessage());
         }
     }
 }

@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+/**
+ * このプロジェクトは本番コードが src/ 配下にある構成
+ * そのままだと src/test/... も main 扱いで compileJava に混ざるので除外する
+ */
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+            // ★重要：テストを main から除外（compileJava に混ざらないようにする）
+            exclude 'test/**'
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    // ★Gradle 9 で「JUnit Platform が無い」系を潰すために追加（安全策）
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'app.MenuApp'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.named("run", JavaExec) {
+    standardInput = System.in
+}

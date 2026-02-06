@@ -219,3 +219,20 @@ cp data/students_sample.csv data/students.csv
 - 保存時は既存CSVを日時付きで自動バックアップしてから上書きする（復元できる）
 - バックアップは最新5件だけ残し、古いものは自動削除して増えすぎを防いだ
 - 読み込み時は不正行（空行/欠損/範囲外/非数値）をスキップし、成功件数とスキップ数を表示する
+
+## 開発手順（clone → test → run）
+
+このリポジトリは **Gradle** で動きます。  
+PC上で動かすときは、基本的に次の順番です：
+
+1. 取得（clone）
+2. テスト（test）
+3. 実行（run）
+
+---
+
+### 1) 取得（clone）
+
+```bash
+git clone https://github.com/thousand-boy/Yuya.git
+cd Yuya

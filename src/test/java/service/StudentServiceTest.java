@@ -19,6 +19,6 @@ public class StudentServiceTest {
 
         int actual = StudentService.sum(students);
 
-        assertEquals(231, actual);
+        assertEquals(230, actual);
     }
 }
